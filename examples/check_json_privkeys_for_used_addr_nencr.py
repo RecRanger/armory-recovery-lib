@@ -32,11 +32,16 @@ def check_json_priv_keys_for_used_addr(
 
     addr_to_priv_key = {}
     for priv_key in priv_key_list:
-        addr1 = unencrypted_priv_key_to_address(bytes.fromhex(priv_key))
-        addr_to_priv_key[addr1] = priv_key
+        for compressed in [True, False]:
+            addr1 = unencrypted_priv_key_to_address(
+                bytes.fromhex(priv_key), compressed=compressed
+            )
+            addr_to_priv_key[addr1] = priv_key
 
-        addr2 = unencrypted_priv_key_to_address(bytes.fromhex(priv_key[::-1]))
-        addr_to_priv_key[addr2] = priv_key
+            addr2 = unencrypted_priv_key_to_address(
+                bytes.fromhex(priv_key[::-1]), compressed=compressed
+            )
+            addr_to_priv_key[addr2] = priv_key
 
     logger.info(
         f"Found {len(addr_to_priv_key)} addresses in the JSON file. "

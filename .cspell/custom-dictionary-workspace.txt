@@ -1,4 +1,5 @@
 bitcoinlib
+dataframe
 decryptor
 dtype
 loguru

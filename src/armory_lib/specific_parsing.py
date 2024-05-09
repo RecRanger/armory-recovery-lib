@@ -6,14 +6,14 @@ from loguru import logger
 from armory_lib.parsing import normalize_csv_hex_str
 
 
-def read_checksum_log_into_df(file_path: Path) -> pl.DataFrame:
+def read_checksum_log_into_df(log_file_path: str | Path) -> pl.DataFrame:
     """Reads a checksum log file into a DataFrame.
     The log can be a concatenation of multiple logs/executions.
 
     Reads the log from the accompanying project:
         https://github.com/recranger/armory-wallet-checksum-searcher
     """
-    with open(file_path, "r") as fp:
+    with open(log_file_path, "r") as fp:
         lines = fp.readlines()
 
     df = pl.DataFrame({"full_line": list(lines)})
@@ -66,7 +66,8 @@ def read_checksum_log_into_df(file_path: Path) -> pl.DataFrame:
     )
     if len(df_duplicate_offsets) > 0:
         logger.warning(
-            f"Found duplicate offsets in {file_path}: {df_duplicate_offsets}"
+            f"Found duplicate offsets in {log_file_path}: "
+            f"{df_duplicate_offsets}"
         )
 
     df = df.with_columns(

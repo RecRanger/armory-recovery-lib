@@ -36,11 +36,23 @@ def address_to_address_hash160(addr: str) -> bytes:
     return addr_decoded[1:21]  # skip network byte, skip checksum
 
 
-def unencrypted_priv_key_to_address_hash160(priv_key: bytes) -> bytes:
-    lib_key = Key(priv_key, is_private=True, compressed=False)
+def unencrypted_priv_key_to_address_hash160(
+    priv_key: bytes, compressed: bool = False
+) -> bytes:
+    """Convert an unencrypted private key to a Bitcoin address's hash160.
+    Expects a 32-byte private key.
+    For old Armory wallets, compressed=False.
+    """
+    lib_key = Key(priv_key, is_private=True, compressed=compressed)
     return lib_key.hash160
 
 
-def unencrypted_priv_key_to_address(priv_key: bytes) -> str:
-    lib_key = Key(priv_key, is_private=True, compressed=False)
+def unencrypted_priv_key_to_address(
+    priv_key: bytes, compressed: bool = False
+) -> str:
+    """Convert an unencrypted private key to a Bitcoin address.
+    Expects a 32-byte private key.
+    For old Armory wallets, compressed=False.
+    """
+    lib_key = Key(priv_key, is_private=True, compressed=compressed)
     return lib_key.address()

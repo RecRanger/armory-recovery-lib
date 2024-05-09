@@ -1,0 +1,8 @@
+[2024-05-09T02:37:38Z INFO armory_wallet_checksum_searcher] Logger setup successful!
+[2024-05-09T02:37:38Z INFO armory_wallet_checksum_searcher] Version: 0.3.0
+[2024-05-09T02:37:38Z INFO armory_wallet_checksum_searcher] Starting processing of file: "./armory_QPriwP2F_encrypt.wallet"
+[2024-05-09T02:37:38Z INFO armory_wallet_checksum_searcher] Searching for 6 checksum patterns: [ChecksumPatternSpec { chunk_len: 16, checksum_len: 4 }, ChecksumPatternSpec { chunk_len: 20, checksum_len: 4 }, ChecksumPatternSpec { chunk_len: 32, checksum_len: 4 }, ChecksumPatternSpec { chunk_len: 44, checksum_len: 4 }, ChecksumPatternSpec { chunk_len: 65, checksum_len: 4 }, ChecksumPatternSpec { chunk_len: 38, checksum_len: 4 }]
+[2024-05-09T02:37:38Z INFO armory_wallet_checksum_searcher] Using block size: 8388608 bytes = 8 MiB
+[2024-05-09T02:37:38Z INFO armory_wallet_checksum_searcher::processor] Using BufReader to read from regular binary file (i.e., assuming no compression).
+[2024-05-09T02:37:38Z INFO armory_wallet_checksum_searcher::processor] Longest chunk and checksum bytes: 69
+[2024-05-09T02:37:38Z INFO armory_wallet_checksum_searcher::processor] ✅ Match! Offset in File: 334=0x14e, Chunk Length: 44, Chunk: [0, 0, 0, 4, 0, 0, 0, 0, 1, 0, 0, 0, 6f, d1, ec, 64, 86, e, fe, 90, 5a, 2, 8f, 7f, dc, c7, c, a3, 80, 4c, f0, 83, 23, 60, bd, 58, 24, 25, c0, 98, 8b, 3d, 71, be], Hash: [ab, 86, 92, d7]

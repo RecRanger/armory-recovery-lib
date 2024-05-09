@@ -34,5 +34,7 @@
     ],
     "black-formatter.args": [
         "--line-length=79"
-    ]
+    ],
+    "flake8.importStrategy": "fromEnvironment",
+    "black-formatter.importStrategy": "fromEnvironment"
 }
