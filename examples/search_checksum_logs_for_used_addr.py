@@ -7,9 +7,14 @@ To test this script, you can run the following from the repo root:
 # unencrypted, should find a row (addr=1CDkMAThcNS4hMZexDiwZF6SJ9gzYmqVgm)
 python examples/search_checksum_logs_for_used_addr.py tests/test_data/armory_wallet_checksum_searcher_demos/31hTA1aRV.wallet.log tests/test_data/armory_wallet_checksum_searcher_demos/fake_addr_list.txt  # noqa
 
-# encrypted, should find no rows for PKs, but should find the address
+# old, encrypted, should find no rows for PKs, but should find the address
+# (addr=1FZ4895LkgeqQfuXmD3cpR3m2hjM3DBKrB)
+python examples/search_checksum_logs_for_used_addr.py tests/test_data/armory_wallet_checksum_searcher_demos/MJUwhWUF.wallet.log tests/test_data/armory_wallet_checksum_searcher_demos/fake_addr_list.txt  # noqa
+
+# new, encrypted, should find no rows for PKs, but should find the address
 # (addr=1CLkV6YCTLDPCtR22Y89hdDQYCKNiRD5An)
 python examples/search_checksum_logs_for_used_addr.py tests/test_data/armory_wallet_checksum_searcher_demos/QPriwP2F.wallet.log tests/test_data/armory_wallet_checksum_searcher_demos/fake_addr_list.txt  # noqa
+
 """
 
 import argparse
@@ -20,7 +25,10 @@ from loguru import logger
 import polars as pl
 from used_addr_check import search_multiple_in_file
 
-from armory_lib.specific_parsing import read_checksum_log_into_df
+from armory_lib.specific_parsing import (
+    read_checksum_log_into_df,
+    log_checksum_summary,
+)
 from armory_lib.calcs import (
     unencrypted_priv_key_to_address,
     address_hash160_to_address,
@@ -69,6 +77,8 @@ def check_log_for_used_addrs(
 
     df_log = read_checksum_log_into_df(input_log_file)
     logger.info(f"Loaded {len(df_log):,} checksum passes from the log file.")
+
+    log_checksum_summary(df_log)
 
     if isinstance(used_addr_file, str):
         used_addr_file = Path(used_addr_file)
@@ -134,6 +144,9 @@ def check_log_for_used_addrs(
 
         df_result_used = df_result.filter(pl.col("is_used") == pl.lit(True))
         logger.info(f"df_result_used: {df_result_used}")
+        logger.info(
+            f"Used addresses found: {df_result_used['address'].to_list()}"
+        )
     else:
         logger.info("No used addresses found.")
 

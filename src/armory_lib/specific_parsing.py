@@ -88,6 +88,28 @@ def read_checksum_log_into_df(log_file_path: str | Path) -> pl.DataFrame:
     return df
 
 
+def log_checksum_summary(df: pl.DataFrame) -> None:
+    """Logs a summary of the checksum DataFrame.
+
+    Args:
+        df: Result of read_checksum_log_into_df(...)
+    """
+    df = df.sort("occurrence_count", descending=True)
+    logger.info(f"Checksum summary: {df}")
+
+    df = (
+        df.group_by("chunk_length")
+        .agg(
+            pl.sum("occurrence_count"),
+            distinct_finds=pl.col("chunk_hex_str").n_unique(),
+            count=pl.len(),  # not too sure what this represents
+        )
+        .sort("chunk_length")
+    )
+    logger.info(f"Checksum summary by chunk length: {df}")
+    # TODO: more
+
+
 if __name__ == "__main__":
     df = read_checksum_log_into_df(
         Path(__file__).parent.parent.parent
