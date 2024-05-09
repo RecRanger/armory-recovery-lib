@@ -5,6 +5,7 @@ from pathlib import Path
 from armory_lib.types import PyBtcWalletRaw, PyBtcKdfParamsRaw, PyBtcAddressRaw
 from armory_lib.calcs import (
     address_hash160_to_address,
+    address_to_address_hash160,
     unencrypted_priv_key_to_address_hash160,
     unencrypted_priv_key_to_address,
     key_derivation_function_romix,
@@ -23,6 +24,17 @@ def test_wallet1_hash160_to_address():
 
     addr_calc = address_hash160_to_address(wallet_1_real_address_hash160_bytes)
     assert addr_calc == wallet_1_real_address
+
+
+def test_wallet1_address_to_hash160():
+    # from armory_31hTA1aRV_.wallet = wallet1
+    wallet_1_real_address_hash160_bytes: bytes = bytes.fromhex(
+        "7b128f58ea5a7bed44ef4f81f54cdf004cb96c90"
+    )
+    wallet_1_real_address: str = "1CDkMAThcNS4hMZexDiwZF6SJ9gzYmqVgm"
+
+    addr160_calc = address_to_address_hash160(wallet_1_real_address)
+    assert addr160_calc == wallet_1_real_address_hash160_bytes
 
 
 def test_wallet1_unencrypted_priv_key_to_address_1():

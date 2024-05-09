@@ -18,6 +18,9 @@ def test_parse_armory_PyBtcAddressRaw_31hTA1aRV():
     assert uut.long_name.rstrip(b"\0").decode("utf-8") == expected_wallet_name
     expected_wallet_name_bytes: bytes = expected_wallet_name.encode("utf-8")
 
+    expected_wallet_id = "31hTA1aRV"
+    assert uut.wallet_id == expected_wallet_id
+
     assert uut.is_encrypted() is False
 
     wallet_expected_hex_dict = {

@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 
+import base58
+
 
 @dataclass
 class PyBtcWalletRaw:
@@ -8,8 +10,8 @@ class PyBtcWalletRaw:
     magic_bytes: bytes  # 4 bytes
     wallet_flags: bytes  # 8 bytes -> "info about the wallet"
 
-    # First 5 bytes of first address in wallet
-    #   (rootAddr25Bytes[:5][::-1]), reversed
+    # First 6 bytes of first address in wallet
+    #   (rootAddr25Bytes[:6][::-1]), reversed
     # This is not intended to look like the root addr str
     # and is reversed to avoid having all wallet IDs start
     # with the same characters (since the network byte is front)
@@ -68,3 +70,9 @@ class PyBtcWalletRaw:
             return True
         else:
             raise ValueError(f"Invalid encrypted flag: {encrypted_flag}")
+
+    @property
+    def wallet_id(self) -> str:
+        """Returns the wallet ID as a base58 encoded string, as it appears in
+        the default wallet filename. ~9 base58 characters long."""
+        return base58.b58encode(self.unique_id).decode("ascii")

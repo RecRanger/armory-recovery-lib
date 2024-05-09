@@ -1,0 +1,17 @@
+[project]
+name = "armory-lib"
+version = "0.1.0"
+
+dependencies = [
+    "bitcoinlib",
+    "cryptography",
+    "loguru",
+    "polars",
+    "base58",
+    "ripemd-hash"
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest",
+]

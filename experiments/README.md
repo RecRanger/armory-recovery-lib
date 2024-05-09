@@ -3,6 +3,9 @@
 To re-implement the KDF in Python 3, we needed to generate test cases from
 the original C code.
 
+The "experiments" in this folder aren't really meant to be executed, especially
+not in installations of this library.
+
 ## Development Notes
 * The Armory KDF function is not implement anywhere other than the C++ code. 
 * To get unit test cases of the KDF function:
