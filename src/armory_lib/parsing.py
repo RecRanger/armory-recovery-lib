@@ -15,8 +15,8 @@ def find_nth_occurrence(haystack: bytes | str, needle: bytes | str, n: int):
 
 
 def fill_to_length(start: bytes | str, fill_val: bytes | str, length: int):
-    """Returns a string that is the original string with the fill_val added to the end
-    until the string is length characters long.
+    """Returns a string that is the original string with the fill_val added to
+    the end until the string is length characters long.
     """
     assert (isinstance(start, bytes) and isinstance(fill_val, bytes)) or (
         isinstance(start, str) and isinstance(fill_val, str)
