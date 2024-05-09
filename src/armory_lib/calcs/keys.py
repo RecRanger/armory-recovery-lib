@@ -36,6 +36,14 @@ def address_to_address_hash160(addr: str) -> bytes:
     return addr_decoded[1:21]  # skip network byte, skip checksum
 
 
+def public_key_to_address(pub_key: bytes) -> str:
+    """Convert a public key to a Bitcoin address.
+    Expects a 65-byte public key.
+    """
+    lib_key = Key(pub_key, is_private=False)
+    return lib_key.address()
+
+
 def unencrypted_priv_key_to_address_hash160(
     priv_key: bytes, compressed: bool = False
 ) -> bytes:

@@ -31,7 +31,7 @@ def _key_derivation_function_romix_one_iter(
     :param passphrase: The passphrase to derive the key from.
     :param salt: A unique salt value.
     :param memory_requirement_bytes: The minimum memory for the KDF, in bytes.
-    :return: The derived key (kdf_output_key).
+    :return: The derived key (kdf_output_key) [32 bytes].
 
     Based on the Armory wallet's key derivation function (KDF) implementation:
     `cppForSwig/EncryptionUtils.cpp:KdfRomix().DeriveKey_OneIter(...)`
@@ -111,8 +111,8 @@ def _test_do_single_iter_demo():
         "pass_len_bytes": 0,
         "mem": 128,  # very tiny, easier debug
         "pass": "31323335",  # b"1235"
-        "salt": "68777977736973737871626966786d61666a6c7966676661667173787369726f",
-        "out": "573b1f633158904395736403563aaaf4a0c766478d75eb453ae392a50f350da2",
+        "salt": "68777977736973737871626966786d61666a6c7966676661667173787369726f",  # noqa
+        "out": "573b1f633158904395736403563aaaf4a0c766478d75eb453ae392a50f350da2",  # noqa
     }
     passphrase = bytes.fromhex(test_data["pass"])
     salt = bytes.fromhex(test_data["salt"])
@@ -142,11 +142,21 @@ def key_derivation_function_romix(
     :param salt: A unique salt value.
     :param memory_requirement_bytes: The minimum memory for the KDF, in bytes.
     :param num_iterations: The number of iterations to run the KDF.
-    :return: The derived key (kdf_output_key).
+    :return: The derived key (kdf_output_key) [32 bytes].
 
     Based on the Armory wallet's key derivation function (KDF) implementation:
     `cppForSwig/EncryptionUtils.cpp:KdfRomix().DeriveKey_OneIter(...)`
     """
+    if memory_requirement_bytes > 1024 * 1024 * 128:
+        raise ValueError("Memory requirement too high, limit is 128 MiB")
+    elif memory_requirement_bytes < 1024:
+        raise ValueError("Memory requirement too low, must be at least 1 KiB")
+
+    if num_iterations < 1:
+        raise ValueError("Number of iterations must be at least 1")
+    elif num_iterations > 1732 + 1:  # 1732 is the wallet4 test num
+        raise ValueError("Number of iterations too high, limit is 1732")
+
     kdf_output_key: None | bytes = None
 
     for _ in range(num_iterations):

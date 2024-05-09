@@ -3,6 +3,7 @@ from pathlib import Path
 from armory_lib.calcs import (
     address_hash160_to_address,
     address_to_address_hash160,
+    public_key_to_address,
     unencrypted_priv_key_to_address_hash160,
     unencrypted_priv_key_to_address,
     compute_checksum,
@@ -32,6 +33,14 @@ def test_wallet1_address_to_hash160():
 
     addr160_calc = address_to_address_hash160(wallet_1_real_address)
     assert addr160_calc == wallet_1_real_address_hash160_bytes
+
+
+def test_wallet1_public_key_to_address():
+    public_key_65 = bytes.fromhex(
+        "04942f18185628c5a6901116e67eca0b8042e1fdb28fde1c91d6b057a37efe437ad0bd3a32f1770ee8f4e31b87cb81937a9c941f8cfbe142c772f969d323625e93"  # noqa
+    )
+    wallet_1_real_address: str = "1CDkMAThcNS4hMZexDiwZF6SJ9gzYmqVgm"
+    assert public_key_to_address(public_key_65) == wallet_1_real_address
 
 
 def test_sha256d():

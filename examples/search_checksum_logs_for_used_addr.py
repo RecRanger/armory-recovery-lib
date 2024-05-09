@@ -40,6 +40,7 @@ from armory_lib.specific_parsing import (
 from armory_lib.calcs import (
     unencrypted_priv_key_to_address,
     address_hash160_to_address,
+    public_key_to_address,
     key_derivation_function_romix_PyBtcKdfParamsMinimal,
     decrypt_aes_cfb,
 )
@@ -70,6 +71,7 @@ class StatusForAddress:
         return {
             "address": self.address,
             "found_by_hash160": self.found_by_hash160,
+            "found_by_pub_key_65": self.found_by_pub_key_65,
             "found_by_unencrypted_private_key": self.found_by_unencrypted_private_key,  # noqa
             "found_by_encrypted_private_key": self.found_by_encrypted_private_key,  # noqa
             "encryption_passphrase": self.encryption_passphrase,
@@ -121,7 +123,23 @@ def check_log_for_used_addrs(
     logger.info(f"Added addrs by hash160 (len=20 bytes): {len(addr_store)=:,}")
 
     # Add addresses by public key (length=65)
-    # TODO: implement this
+    df_log_65 = df_log.filter(pl.col("chunk_length") == pl.lit(65))
+    logger.info(
+        f"Filtered to {len(df_log_65):,} checksum passes with 65-byte chunks."
+    )
+    pub_key_list = df_log_65["chunk_bytes"].to_list()
+    for pub_key in pub_key_list:
+        try:
+            addr = public_key_to_address(pub_key)
+        except Exception:
+            # sometimes, this step fails if it's an invalid public key
+            continue
+        if addr not in addr_store:
+            addr_store[addr] = StatusForAddress(address=addr)
+        addr_store[addr].found_by_pub_key_65 = True
+    logger.info(
+        f"Added addrs by public key (len=65 bytes): {len(addr_store)=:,}"
+    )
 
     # Add addresses by unencrypted private key (length=32)
     df_log_32 = df_log.filter(pl.col("chunk_length") == pl.lit(32))
@@ -141,31 +159,62 @@ def check_log_for_used_addrs(
 
     # Add addresses by encrypted private key (length=32)
     if password_list:
+        raise NotImplementedError(
+            "Encrypted private key search not implemented."
+        )
         bytes16_iv_list = df_log.filter(pl.col("chunk_length") == pl.lit(16))[
-            "chunk_bytes"
+            "chunk_hex_str"
         ].to_list()
         bytes44_kdf_params_list = df_log.filter(
             pl.col("chunk_length") == pl.lit(44)
-        )["chunk_bytes"].to_list()
+        )["chunk_hex_str"].to_list()
         kdf_params_list = [
-            PyBtcKdfParamsMinimal.from_bytes(b)
+            PyBtcKdfParamsMinimal.from_bytes(bytes.fromhex(b))
             for b in bytes44_kdf_params_list
         ]
+        logger.info(f"Loaded {len(kdf_params_list):,} KDF params.")
 
         # naive approach: all passwords, all kdf, all IVs, all priv keys
         # key: password, value: kdf_output
+        def safe_kdf(
+            passphrase: str, kdf_params: PyBtcKdfParamsMinimal
+        ) -> bytes:
+            try:
+                key_derivation_function_romix_PyBtcKdfParamsMinimal(
+                    passphrase=passphrase,
+                    kdf_params=kdf_params,
+                )
+            except Exception as e:
+                logger.error(
+                    f"Error with passphrase: {passphrase}, kdf_params: {kdf_params}: {e}"  # noqa
+                )
+                return None
+
+        # TODO: filter out the invalid KDF params early-on (in-range iter/mem, salt is sufficiently random, etc.)
+        # TODO: check if we can expect num_iterations to ALWAYS be 1
+        # FIXME: need a different data structure to carry forward the passphrase, with the generated key, while allowing multiple passphrases
+        # FIXME: ^ idea: maybe just flip the key-value order
         kdf_output_list: dict[str:bytes] = {
-            password: key_derivation_function_romix_PyBtcKdfParamsMinimal(
+            password: safe_kdf(
                 passphrase=password,
                 kdf_params=kdf_params,
             )
-            for password, kdf_params in itertools.product(
-                password_list, kdf_params_list
+            for password, kdf_params in tqdm(
+                itertools.product(password_list, kdf_params_list),
+                total=len(password_list) * len(kdf_params_list),
+                desc="KDF (password x kdf_params)",
             )
+        }
+        len_incl_nulls = len(kdf_output_list.keys())
+        kdf_output_list = {
+            password: kdf_output
+            for password, kdf_output in kdf_output_list.items()
+            if kdf_output is not None
         }
         logger.info(
             f"Generated {len(kdf_output_list):,} KDF outputs "
-            "(passwords x kdf_params)."
+            "(passwords x kdf_params). "
+            f"Skipped {len_incl_nulls - len(kdf_output_list):,} due to errors."
         )
         for priv_key_src, iv in tqdm(
             itertools.product(priv_key_list, bytes16_iv_list),
