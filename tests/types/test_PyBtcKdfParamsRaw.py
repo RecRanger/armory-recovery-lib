@@ -89,10 +89,10 @@ def test_ex1_to_from_PyBtcKdfParamsMinimal_add_checksum(raw_params_example_1):
 # Tests for PyBtcKdfParamsRaw
 @pytest.fixture
 def raw_params_example_2() -> PyBtcKdfParamsRaw:
-    """From tests/test_data/armory_MJUwhWUF_.wallet, encrypted."""
+    """From tests/test_data/test_wallets/armory_MJUwhWUF_.wallet, encrypted."""
 
     wallet_bytes = (
-        TEST_ROOT_PATH / "test_data/armory_MJUwhWUF_.wallet"
+        TEST_ROOT_PATH / "test_data/test_wallets/armory_MJUwhWUF_.wallet"
     ).read_bytes()
 
     wallet_raw = PyBtcWalletRaw.from_bytes(wallet_bytes)

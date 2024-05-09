@@ -8,7 +8,7 @@ TEST_ROOT_PATH = Path(__file__).parent.parent
 
 def test_parse_armory_PyBtcAddressRaw():
     wallet_1_bytes = (
-        TEST_ROOT_PATH / "test_data/armory_31hTA1aRV_.wallet"
+        TEST_ROOT_PATH / "test_data/test_wallets/armory_31hTA1aRV_.wallet"
     ).read_bytes()
 
     # find the hash160 (start of the PyBtcAddressRaw section)

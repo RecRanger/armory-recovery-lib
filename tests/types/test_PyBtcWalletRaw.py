@@ -8,7 +8,7 @@ TEST_ROOT_PATH = Path(__file__).parent.parent
 
 def test_parse_armory_PyBtcAddressRaw_31hTA1aRV():
     wallet_bytes = (
-        TEST_ROOT_PATH / "test_data/armory_31hTA1aRV_.wallet"
+        TEST_ROOT_PATH / "test_data/test_wallets/armory_31hTA1aRV_.wallet"
     ).read_bytes()
 
     uut = PyBtcWalletRaw.from_bytes(wallet_bytes)
@@ -47,7 +47,7 @@ def test_parse_armory_PyBtcAddressRaw_31hTA1aRV():
 
 def test_parse_armory_PyBtcAddressRaw_MJUwhWUF():
     wallet_bytes = (
-        TEST_ROOT_PATH / "test_data/armory_MJUwhWUF_.wallet"
+        TEST_ROOT_PATH / "test_data/test_wallets/armory_MJUwhWUF_.wallet"
     ).read_bytes()
 
     uut = PyBtcWalletRaw.from_bytes(wallet_bytes)

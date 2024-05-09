@@ -1,0 +1,35 @@
+# 1: normal wallet
+- file_name: armory_31hTA1aRV_.wallet
+  wallet_id: 31hTA1aRV
+  wallet_name: "0.88_win7_test_10_nencr"
+  addr1: 1CDkMAThcNS4hMZexDiwZF6SJ9gzYmqVgm
+  encrypted: false
+  encryption_passphrase: null
+  armory_version: v0.88
+
+# 2: old encrypted wallet
+- file_name: armory_MJUwhWUF_.wallet
+  wallet_id: MJUwhWUF
+  wallet_name: "0.88_win7_test_11_encr"
+  addr1: 1FZ4895LkgeqQfuXmD3cpR3m2hjM3DBKrB
+  encrypted: true
+  encryption_passphrase: "0.88_win7_test_11_encr"
+  armory_version: v0.88
+
+# 3: new encrypted wallet, high iteration count
+- file_name: armory_QPriwP2F_encrypt.wallet
+  wallet_id: QPriwP2F
+  wallet_name: "0.96.5_win7_test_20_encr_highiter"
+  addr1: 1CLkV6YCTLDPCtR22Y89hdDQYCKNiRD5An
+  encrypted: true
+  encryption_passphrase: "0.96.5_win7_test_20_encr_highiter"
+  armory_version: v0.96.5
+
+# 4: new encrypted wallet, very high iteration count
+- file_name: armory_2ma44ZAQw_encrypt.wallet
+  wallet_id: 2ma44ZAQw
+  wallet_name: "0.96.5_win7_test_22_encr_highiter"
+  addr1: 17Rukv6zX1aonwQgRCt8bLX37RKXAc3Y13
+  encrypted: true
+  encryption_passphrase: "0.96.5_win7_test_22_encr_highiter"
+  armory_version: v0.96.5

@@ -17,7 +17,7 @@ TEST_ROOT_PATH = Path(__file__).parent.parent
 @pytest.fixture
 def wallet2_PyBtcWalletRaw() -> PyBtcWalletRaw:
     wallet_bytes = (
-        TEST_ROOT_PATH / "test_data/armory_MJUwhWUF_.wallet"
+        TEST_ROOT_PATH / "test_data/test_wallets/armory_MJUwhWUF_.wallet"
     ).read_bytes()
 
     return PyBtcWalletRaw.from_bytes(wallet_bytes)
@@ -26,7 +26,7 @@ def wallet2_PyBtcWalletRaw() -> PyBtcWalletRaw:
 @pytest.fixture
 def wallet2_PyBtcAddressRaw() -> PyBtcAddressRaw:
     wallet_bytes = (
-        TEST_ROOT_PATH / "test_data/armory_MJUwhWUF_.wallet"
+        TEST_ROOT_PATH / "test_data/test_wallets/armory_MJUwhWUF_.wallet"
     ).read_bytes()
 
     # Must add 1083 (to get past PyBtcWalletRaw),
@@ -88,7 +88,7 @@ def test_wallet2_decrypt_and_get_address_step_by_step(
     assert addr_calc_full == expected_addr
 
 
-def test_encrypted_priv_key_to_address(
+def test_wallet2_encrypted_priv_key_to_address(
     wallet2_PyBtcWalletRaw, wallet2_PyBtcAddressRaw
 ):
     """Full end-to-end test of decrypting the private key and getting the
@@ -115,7 +115,8 @@ def test_encrypted_priv_key_to_address(
 @pytest.fixture
 def wallet3_PyBtcWalletRaw() -> PyBtcWalletRaw:
     wallet_bytes = (
-        TEST_ROOT_PATH / "test_data/armory_QPriwP2F_encrypt.wallet"
+        TEST_ROOT_PATH
+        / "test_data/test_wallets/armory_QPriwP2F_encrypt.wallet"
     ).read_bytes()
 
     return PyBtcWalletRaw.from_bytes(wallet_bytes)
@@ -124,7 +125,8 @@ def wallet3_PyBtcWalletRaw() -> PyBtcWalletRaw:
 @pytest.fixture
 def wallet3_PyBtcAddressRaw() -> PyBtcAddressRaw:
     wallet_bytes = (
-        TEST_ROOT_PATH / "test_data/armory_QPriwP2F_encrypt.wallet"
+        TEST_ROOT_PATH
+        / "test_data/test_wallets/armory_QPriwP2F_encrypt.wallet"
     ).read_bytes()
 
     # Note: This start offset is way later than in v0.88 wallets. Weird.
@@ -175,7 +177,8 @@ def test_wallet3_encrypted_priv_key_to_address(
 @pytest.fixture
 def wallet4_PyBtcWalletRaw() -> PyBtcWalletRaw:
     wallet_bytes = (
-        TEST_ROOT_PATH / "test_data/armory_2ma44ZAQw_encrypt.wallet"
+        TEST_ROOT_PATH
+        / "test_data/test_wallets/armory_2ma44ZAQw_encrypt.wallet"
     ).read_bytes()
 
     return PyBtcWalletRaw.from_bytes(wallet_bytes)
@@ -184,7 +187,8 @@ def wallet4_PyBtcWalletRaw() -> PyBtcWalletRaw:
 @pytest.fixture
 def wallet4_PyBtcAddressRaw() -> PyBtcAddressRaw:
     wallet_bytes = (
-        TEST_ROOT_PATH / "test_data/armory_2ma44ZAQw_encrypt.wallet"
+        TEST_ROOT_PATH
+        / "test_data/test_wallets/armory_2ma44ZAQw_encrypt.wallet"
     ).read_bytes()
 
     # Note: This start offset is way later than in v0.88 wallets. Weird.

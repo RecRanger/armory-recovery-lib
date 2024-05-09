@@ -12,7 +12,7 @@ def test_read_checksum_log_into_df():
         TEST_ROOT_PATH
         / "test_data"
         / "armory_wallet_checksum_searcher_demos"
-        / "armory_wallet_checksum_searcher_demo_QPriwP2F_short.wallet.log"
+        / "QPriwP2F_short.wallet.log"
     )
 
     assert isinstance(df, pl.DataFrame)

@@ -94,6 +94,6 @@ if __name__ == "__main__":
         / "tests"
         / "test_data"
         / "armory_wallet_checksum_searcher_demos"
-        / "armory_wallet_checksum_searcher_demo_QPriwP2F_short.wallet.log"
+        / "QPriwP2F_short.wallet.log"
     )
     print(df)
