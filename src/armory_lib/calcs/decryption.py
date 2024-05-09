@@ -5,6 +5,7 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
 
 from armory_lib.calcs.keys import unencrypted_priv_key_to_address
+from armory_lib.types.py_btc_kdf_params import PyBtcKdfParamsMinimal
 
 
 def _sha512(data: bytes) -> bytes:
@@ -160,6 +161,25 @@ def key_derivation_function_romix(
 
     assert isinstance(kdf_output_key, bytes)
     return kdf_output_key
+
+
+def key_derivation_function_romix_PyBtcKdfParamsMinimal(
+    passphrase: bytes | str,
+    kdf_params: PyBtcKdfParamsMinimal,
+) -> bytes:
+    """
+    Derives a key from a passphrase using a key derivation function (KDF).
+
+    :param passphrase: The passphrase to derive the key from.
+    :param kdf_params: The KDF parameters.
+    :return: The derived key (kdf_output_key).
+    """
+    return key_derivation_function_romix(
+        passphrase=passphrase,
+        salt=kdf_params.salt,
+        memory_requirement_bytes=kdf_params.memory_requirement,
+        num_iterations=kdf_params.num_iterations,
+    )
 
 
 def decrypt_aes_cfb(

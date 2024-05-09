@@ -5,3 +5,4 @@ decryptor
 dtype
 loguru
 romix
+tqdm

@@ -13,3 +13,4 @@ pytest>=*
 
 # used in examples only:
 used-addr-check~=0.1.1
+tqdm>=*

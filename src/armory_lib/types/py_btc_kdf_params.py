@@ -29,6 +29,12 @@ class PyBtcKdfParamsMinimal:
             assert len(val) == 44
         return val
 
+    @classmethod
+    def from_bytes(cls, byte_string: bytes) -> "PyBtcKdfParamsMinimal":
+        return PyBtcKdfParamsRaw.from_bytes(
+            byte_string
+        ).to_PyBtcKdfParamsMinimal()
+
     def to_PyBtcKdfParamsRaw(
         self, add_checksum: bool = False
     ) -> "PyBtcKdfParamsRaw":
@@ -60,7 +66,7 @@ class PyBtcKdfParamsRaw:
 
     @classmethod
     def from_bytes(cls, byte_string: bytes) -> "PyBtcKdfParamsRaw":
-        # Ensure the byte string has the correct length
+        """Reads 44+ bytes and returns a PyBtcKdfParamsRaw object."""
         assert isinstance(byte_string, bytes), "Byte string must be type bytes"
         assert (
             len(byte_string) >= 44
