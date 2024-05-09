@@ -1,16 +1,16 @@
-import pytest
+import base58
 
 from pathlib import Path
 
-from armory_lib.types import PyBtcWalletRaw, PyBtcKdfParamsRaw, PyBtcAddressRaw
 from armory_lib.calcs import (
     address_hash160_to_address,
     address_to_address_hash160,
+    address_to_address_hash160_plus_checksum,
     unencrypted_priv_key_to_address_hash160,
     unencrypted_priv_key_to_address,
-    key_derivation_function_romix,
-    decrypt_aes_cfb,
+    compute_checksum,
 )
+from armory_lib.calcs.hashes import _sha256d
 
 TEST_ROOT_PATH = Path(__file__).parent.parent
 
@@ -35,6 +35,31 @@ def test_wallet1_address_to_hash160():
 
     addr160_calc = address_to_address_hash160(wallet_1_real_address)
     assert addr160_calc == wallet_1_real_address_hash160_bytes
+
+
+def test_sha256d():
+    # Source: https://bitcoin.stackexchange.com/a/32363
+    hash160 = bytes.fromhex("00" + "c4c5d791fcb4654a1ef5e03fe0ad3d9c598f9827")
+    checksum = bytes.fromhex("4abb8f1a")
+    assert _sha256d(hash160)[:4] == checksum
+    assert compute_checksum(hash160) == checksum
+
+
+def test_address_to_address_hash160_plus_checksum():
+    # Source: https://bitcoin.stackexchange.com/a/32363
+    addr = "1JwSSubhmg6iPtRjtyqhUYYH7bZg3Lfy1T"
+    hash160 = bytes.fromhex("c4c5d791fcb4654a1ef5e03fe0ad3d9c598f9827")
+    hash160 = bytes.fromhex("c4c5d791fcb4654a1ef5e03fe0ad3d9c598f9827")
+    checksum = bytes.fromhex("4abb8f1a")
+
+    # check that everything is typed right
+    expected_addr_decoded = bytes.fromhex("00") + hash160 + checksum
+    assert expected_addr_decoded == base58.b58decode(addr)
+
+    assert len(hash160) == 20
+    assert len(checksum) == 4
+
+    assert address_to_address_hash160_plus_checksum(addr) == hash160 + checksum
 
 
 def test_wallet1_unencrypted_priv_key_to_address_1():
