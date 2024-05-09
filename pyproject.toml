@@ -8,7 +8,8 @@ dependencies = [
     "loguru",
     "polars",
     "base58",
-    "ripemd-hash"
+    "ripemd-hash",
+    "fire",
 ]
 
 [project.optional-dependencies]

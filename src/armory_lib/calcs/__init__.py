@@ -11,7 +11,6 @@ from .hashes import compute_checksum  # noqa
 from .keys import (  # noqa
     address_hash160_to_address,
     address_to_address_hash160,
-    address_to_address_hash160_plus_checksum,
     unencrypted_priv_key_to_address_hash160,
     unencrypted_priv_key_to_address,
 )

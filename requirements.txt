@@ -6,4 +6,10 @@ base58>=*
 bitcoinlib==0.6.15
 cryptography~=42.0.5
 
+fire~=0.6.0
+
 pytest>=*
+
+
+# used in examples only:
+used-addr-check~=0.1.1

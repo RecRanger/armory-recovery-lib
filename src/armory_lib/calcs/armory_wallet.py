@@ -1,4 +1,4 @@
-from armory_lib.calcs.keys import address_to_address_hash160_plus_checksum
+from armory_lib.calcs.keys import address_to_address_hash160
 
 import base58
 
@@ -10,7 +10,7 @@ def bitcoin_addr_to_armory_unique_id(addr: str) -> bytes:
     This value is directly from the Armory PyBtcWallet class's unique_id field.
     """
 
-    addr_hash = NETWORK_BYTE + address_to_address_hash160_plus_checksum(addr)
+    addr_hash = NETWORK_BYTE + address_to_address_hash160(addr)
     unique_id = addr_hash[:6][::-1]
     return unique_id
 
