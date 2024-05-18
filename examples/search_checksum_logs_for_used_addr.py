@@ -36,6 +36,8 @@ from used_addr_check import search_multiple_in_file
 from armory_lib.specific_parsing import (
     read_checksum_log_into_df,
     log_checksum_summary,
+    log_checksum_len20_facts,
+    log_checksum_len44_facts,
 )
 from armory_lib.calcs import (
     unencrypted_priv_key_to_address,
@@ -102,6 +104,8 @@ def check_log_for_used_addrs(
     logger.info(f"Loaded {len(df_log):,} checksum passes from the log file.")
 
     log_checksum_summary(df_log)
+    log_checksum_len20_facts(df_log)
+    log_checksum_len44_facts(df_log)
 
     if isinstance(used_addr_file, str):
         used_addr_file = Path(used_addr_file)
@@ -190,9 +194,11 @@ def check_log_for_used_addrs(
                 )
                 return None
 
-        # TODO: filter out the invalid KDF params early-on (in-range iter/mem, salt is sufficiently random, etc.)
+        # TODO: filter out the invalid KDF params early-on (in-range iter/mem,
+        #   salt is sufficiently random, etc.)
         # TODO: check if we can expect num_iterations to ALWAYS be 1
-        # FIXME: need a different data structure to carry forward the passphrase, with the generated key, while allowing multiple passphrases
+        # FIXME: need a different data structure to carry forward the password,
+        #   with the generated key, while allowing multiple passphrases
         # FIXME: ^ idea: maybe just flip the key-value order
         kdf_output_list: dict[str:bytes] = {
             password: safe_kdf(
