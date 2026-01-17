@@ -1,5 +1,5 @@
-from bitcoinlib.keys import Key
 import base58
+from bitcoinlib.keys import Key
 
 from armory_lib.calcs.hashes import compute_checksum
 
@@ -45,8 +45,8 @@ def public_key_to_address(pub_key: bytes) -> str:
 
 
 def unencrypted_priv_key_to_address_hash160(
-    priv_key: bytes, compressed: bool = False
-) -> bytes:
+    priv_key: bytes | bytearray, compressed: bool = False
+) -> bytes | bytearray:
     """Convert an unencrypted private key to a Bitcoin address's hash160.
     Expects a 32-byte private key.
     For old Armory wallets, compressed=False.
@@ -56,7 +56,7 @@ def unencrypted_priv_key_to_address_hash160(
 
 
 def unencrypted_priv_key_to_address(
-    priv_key: bytes, compressed: bool = False
+    priv_key: bytes | bytearray, compressed: bool = False
 ) -> str:
     """Convert an unencrypted private key to a Bitcoin address.
     Expects a 32-byte private key.

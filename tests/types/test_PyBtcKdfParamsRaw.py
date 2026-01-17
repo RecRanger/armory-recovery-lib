@@ -1,5 +1,6 @@
-import pytest
 from pathlib import Path
+
+import pytest
 
 from armory_lib.types import (
     PyBtcKdfParamsMinimal,
@@ -116,7 +117,7 @@ def test_ex2_from_file_bytes(raw_params_example_2):
         + raw_params_example_2.num_iterations_raw
         + raw_params_example_2.salt
         + raw_params_example_2.checksum
-    )
+    )  # pyright: ignore[reportOperatorIssue]
     parsed = PyBtcKdfParamsRaw.from_bytes(byte_string)
     assert parsed == raw_params_example_2
 

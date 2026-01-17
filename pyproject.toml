@@ -4,6 +4,17 @@ version = "0.1.0"
 
 requires-python = ">=3.11"
 
+authors = [
+    { name="RecRanger", email="RecRanger+package@proton.me" },
+]
+description = "Python library and tools for recovering Armory Bitcoin Wallets"
+readme = "README.md"
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+
 dependencies = [
     "bitcoinlib",
     "cryptography",
@@ -12,6 +23,8 @@ dependencies = [
     "base58",
     "ripemd-hash",
     "fire",
+    "used_addr_check",
+    "tqdm",
 ]
 
 [dependency-groups]
@@ -30,3 +43,6 @@ packages = ["src/armory_lib"]
 
 [tool.ruff]
 line-length = 79
+
+[tool.pyright]
+typeCheckingMode = "standard"
