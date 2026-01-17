@@ -16,7 +16,7 @@ classifiers = [
 ]
 
 dependencies = [
-    "bitcoinlib",
+    "bitcoinlib>=0.7.6",
     "cryptography",
     "loguru",
     "polars>1",
