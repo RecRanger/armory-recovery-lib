@@ -19,13 +19,18 @@ dependencies = [
     "bitcoinlib",
     "cryptography",
     "loguru",
-    "polars",
+    "polars>1",
     "base58",
     "ripemd-hash",
     "fire",
-    "used_addr_check",
+    "used_addr_check>=0.1.9",
     "tqdm",
 ]
+
+[project.urls]
+Homepage = "https://github.com/RecRanger/armory-recovery-lib"
+Repository = "https://github.com/RecRanger/armory-recovery-lib"
+Issues = "https://github.com/RecRanger/armory-recovery-lib/issues"
 
 [dependency-groups]
 dev = [
