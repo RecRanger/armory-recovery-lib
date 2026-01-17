@@ -243,5 +243,5 @@ def encrypted_priv_key_to_address(
     return address
 
 
-# if __name__ == "__main__":
-#     _test_do_single_iter_demo()
+if __name__ == "__main__":
+    _test_do_single_iter_demo()

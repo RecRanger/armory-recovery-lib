@@ -1,7 +1,5 @@
 from dataclasses import dataclass
 
-from armory_lib.calcs import compute_checksum
-
 
 @dataclass
 class PyBtcAddressRaw:
@@ -81,6 +79,8 @@ class PyBtcAddressRaw:
         return out
 
     def validate_checksums(self) -> dict[str, bool]:
+        from armory_lib.calcs import compute_checksum
+
         return {
             "AddressChk": compute_checksum(self.Address160) == self.AddressChk,
             "ChainChk": compute_checksum(self.ChainCode) == self.ChainChk,

@@ -1,8 +1,6 @@
 from dataclasses import dataclass
 from typing import Optional
 
-from armory_lib.calcs import compute_checksum
-
 # Source: @latest: armoryengine/PyBtcWallet.py/serializeKdfParams(...)
 
 
@@ -21,6 +19,8 @@ class PyBtcKdfParamsMinimal:
             ]
         )
         if add_checksum:
+            from armory_lib.calcs import compute_checksum
+
             val += compute_checksum(val)
 
         if add_checksum:
@@ -113,6 +113,8 @@ class PyBtcKdfParamsRaw:
         }
 
     def calculate_checksum(self) -> bytes:
+        from armory_lib.calcs import compute_checksum
+
         return compute_checksum(
             self.memory_requirement_raw + self.num_iterations_raw + self.salt
         )
