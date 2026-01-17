@@ -43,7 +43,9 @@ class PyBtcKdfParamsMinimal:
         )
 
     @staticmethod
-    def from_PyBtcKdfParamsRaw(kdf_params_raw: "PyBtcKdfParamsRaw") -> None:
+    def from_PyBtcKdfParamsRaw(
+        kdf_params_raw: "PyBtcKdfParamsRaw",
+    ) -> "PyBtcKdfParamsMinimal":
         assert isinstance(kdf_params_raw, PyBtcKdfParamsRaw)
         return kdf_params_raw.to_PyBtcKdfParamsMinimal()
 

@@ -1,4 +1,17 @@
-def find_nth_occurrence(haystack: bytes | str, needle: bytes | str, n: int):
+from typing import TypeVar, overload
+
+
+@overload
+def find_nth_occurrence(haystack: bytes, needle: bytes, n: int) -> int: ...
+
+
+@overload
+def find_nth_occurrence(haystack: str, needle: str, n: int) -> int: ...
+
+
+def find_nth_occurrence(
+    haystack: str | bytes, needle: str | bytes, n: int
+) -> int:
     """Returns the index of the nth occurrence of a substring ("needle").
     n = 1 is the minimum.
     """
@@ -7,14 +20,17 @@ def find_nth_occurrence(haystack: bytes | str, needle: bytes | str, n: int):
     ), "string and sub_string must be the same type"
     assert n > 0, "n must be greater than 0. n=1 is the first occurrence."
 
-    start_index = haystack.find(needle)
+    start_index = haystack.find(needle)  # pyright: ignore[reportArgumentType]
     while start_index >= 0 and n > 1:
-        start_index = haystack.find(needle, start_index + 1)
+        start_index = haystack.find(needle, start_index + 1)  # pyright: ignore[reportArgumentType]
         n -= 1
     return start_index
 
 
-def fill_to_length(start: bytes | str, fill_val: bytes | str, length: int):
+T = TypeVar("T", bytes, str)
+
+
+def fill_to_length(start: T, fill_val: T, length: int) -> T:
     """Returns a string that is the original string with the fill_val added to
     the end until the string is length characters long.
     """

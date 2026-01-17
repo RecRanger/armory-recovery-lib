@@ -4,22 +4,23 @@
 # and testing/exploration purposes only.
 
 import json
-
-
 import sys
 
 sys.path.insert(0, "<path_to>/armory_0.96.5_source/Armory3")
 
-import CppBlockUtils as u
+import CppBlockUtils as u  # pyright: ignore[reportMissingImports]
 
 
 def print_kdf_sample_single_random(pass_len_bytes, mem):
     kdf = u.KdfRomix()
 
-    extraEntropy = u.SecureBinaryData(0)
+    if 0:
+        extraEntropy = u.SecureBinaryData(0)
+        salt_sbin = u.SecureBinaryData().GenerateRandom(32, extraEntropy)
+        pass_sbin = u.SecureBinaryData().GenerateRandom(
+            pass_len_bytes, extraEntropy
+        )
 
-    # salt_sbin = u.SecureBinaryData().GenerateRandom(32, extraEntropy)
-    # pass_sbin = u.SecureBinaryData().GenerateRandom(pass_len_bytes, extraEntropy)
     salt_sbin = u.SecureBinaryData(
         "hwywsissxqbifxmafjlyfgfafqsxsiro"
     )  # 32 bytes

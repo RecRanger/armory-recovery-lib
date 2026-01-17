@@ -1,14 +1,13 @@
 import hashlib
 
-
-from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 
 from armory_lib.calcs.keys import unencrypted_priv_key_to_address
 from armory_lib.types.py_btc_kdf_params import PyBtcKdfParamsMinimal
 
 
-def _sha512(data: bytes) -> bytes:
+def _sha512(data: bytes | bytearray) -> bytes:
     """
     Hashes the given data using the SHA-512 algorithm.
 
@@ -21,10 +20,10 @@ def _sha512(data: bytes) -> bytes:
 
 
 def _key_derivation_function_romix_one_iter(
-    passphrase: bytes | str,
-    salt: bytes,
+    passphrase: bytes | bytearray | str,
+    salt: bytes | bytearray,
     memory_requirement_bytes: int,
-) -> bytes:
+) -> bytes | bytearray:
     """
     Derives a key from a passphrase using a key derivation function (KDF).
 
@@ -130,11 +129,11 @@ def _test_do_single_iter_demo():
 
 
 def key_derivation_function_romix(
-    passphrase: bytes | str,
-    salt: bytes,
+    passphrase: bytes | bytearray | str,
+    salt: bytes | bytearray,
     memory_requirement_bytes: int,
     num_iterations: int = 1,
-) -> bytes:
+) -> bytes | bytearray:
     """
     Derives a key from a passphrase using a key derivation function (KDF).
 
@@ -157,7 +156,7 @@ def key_derivation_function_romix(
     elif num_iterations > 1732 + 1:  # 1732 is the wallet4 test num
         raise ValueError("Number of iterations too high, limit is 1732")
 
-    kdf_output_key: None | bytes = None
+    kdf_output_key: None | bytes | bytearray = None
 
     for _ in range(num_iterations):
         # Perform the KDF for the specified number of iterations
@@ -169,14 +168,14 @@ def key_derivation_function_romix(
             memory_requirement_bytes=memory_requirement_bytes,
         )
 
-    assert isinstance(kdf_output_key, bytes)
+    assert isinstance(kdf_output_key, (bytes, bytearray))
     return kdf_output_key
 
 
 def key_derivation_function_romix_PyBtcKdfParamsMinimal(
-    passphrase: bytes | str,
+    passphrase: bytes | bytearray | str,
     kdf_params: PyBtcKdfParamsMinimal,
-) -> bytes:
+) -> bytes | bytearray:
     """
     Derives a key from a passphrase using a key derivation function (KDF).
 
@@ -193,10 +192,10 @@ def key_derivation_function_romix_PyBtcKdfParamsMinimal(
 
 
 def decrypt_aes_cfb(
-    priv_key_encrypted_32_bytes: bytes,
-    kdf_output_key: bytes,
-    init_vector_16_bytes: bytes,
-) -> bytes:
+    priv_key_encrypted_32_bytes: bytes | bytearray,
+    kdf_output_key: bytes | bytearray,
+    init_vector_16_bytes: bytes | bytearray,
+) -> bytes | bytearray:
     """
     Decrypts data using AES in CFB mode.
     Used in the Armory wallet's decryption process,
@@ -222,12 +221,12 @@ def decrypt_aes_cfb(
 
 
 def encrypted_priv_key_to_address(
-    priv_key_encrypted_32_bytes,
+    priv_key_encrypted_32_bytes: bytes | bytearray,
     passphrase: str,
-    salt: bytes,
+    salt: bytes | bytearray,
     memory_requirement_bytes: int,
     num_iterations: int,
-    init_vector_16_bytes: bytes,
+    init_vector_16_bytes: bytes | bytearray,
 ):
     kdf_output_key = key_derivation_function_romix(
         passphrase=passphrase,
