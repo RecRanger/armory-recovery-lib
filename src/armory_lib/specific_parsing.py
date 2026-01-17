@@ -8,6 +8,7 @@ from armory_lib.parsing import normalize_csv_hex_str
 
 def read_checksum_log_into_df(log_file_path: str | Path) -> pl.DataFrame:
     """Reads a checksum log file into a DataFrame.
+
     The log can be a concatenation of multiple logs/executions.
 
     Reads the log from the accompanying project:
