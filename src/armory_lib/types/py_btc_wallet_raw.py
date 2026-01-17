@@ -28,9 +28,9 @@ class PyBtcWalletRaw:
     @classmethod
     def from_bytes(cls, byte_string: bytes) -> "PyBtcWalletRaw":
         assert isinstance(byte_string, bytes), "Byte string must be type bytes"
-        assert (
-            len(byte_string) >= 1083
-        ), "Byte string must be >=1083 bytes long"
+        assert len(byte_string) >= 1083, (
+            "Byte string must be >=1083 bytes long"
+        )
         return cls(
             file_id=byte_string[0:8],
             version=byte_string[8:12],

@@ -68,9 +68,9 @@ class PyBtcKdfParamsRaw:
     def from_bytes(cls, byte_string: bytes) -> "PyBtcKdfParamsRaw":
         """Reads 44+ bytes and returns a PyBtcKdfParamsRaw object."""
         assert isinstance(byte_string, bytes), "Byte string must be type bytes"
-        assert (
-            len(byte_string) >= 44
-        ), "Byte string must be at least 44 bytes long"
+        assert len(byte_string) >= 44, (
+            "Byte string must be at least 44 bytes long"
+        )
 
         memory_requirement_raw = byte_string[0:8]
         num_iterations_raw = byte_string[8:12]

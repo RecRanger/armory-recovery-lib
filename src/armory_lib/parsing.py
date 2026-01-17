@@ -21,9 +21,9 @@ def fill_to_length(start: bytes | str, fill_val: bytes | str, length: int):
     assert (isinstance(start, bytes) and isinstance(fill_val, bytes)) or (
         isinstance(start, str) and isinstance(fill_val, str)
     ), "start and fill_val must be the same type"
-    assert length >= len(
-        start
-    ), "length must be greater than or equal to the length of start"
+    assert length >= len(start), (
+        "length must be greater than or equal to the length of start"
+    )
     assert len(fill_val) == 1, "fill_val must be a single character or byte"
 
     return start + fill_val * (length - len(start))

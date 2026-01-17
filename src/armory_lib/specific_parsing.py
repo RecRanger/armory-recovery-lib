@@ -29,12 +29,16 @@ def read_checksum_log_into_df(log_file_path: str | Path) -> pl.DataFrame:
             chunk_hex_str_csv=pl.col("full_line").str.extract(
                 r"Chunk: \[([\w ,]+)\]"
             ),
-            offset=pl.col("full_line")
-            .str.extract(r"Offset in File: (\d+)")
-            .cast(pl.UInt64),
-            chunk_length=pl.col("full_line")
-            .str.extract(r"Chunk Length: (\d+)")
-            .cast(pl.UInt8),
+            offset=(
+                pl.col("full_line")
+                .str.extract(r"Offset in File: (\d+)")
+                .cast(pl.UInt64)
+            ),
+            chunk_length=(
+                pl.col("full_line")
+                .str.extract(r"Chunk Length: (\d+)")
+                .cast(pl.UInt8)
+            ),
         )
         .with_columns(pl.col("file_path").fill_null(strategy="forward"))
         .filter(

@@ -38,9 +38,9 @@ def _key_derivation_function_romix_one_iter(
     """
 
     # Convert passphrase to bytes if it's a string
-    assert isinstance(passphrase, bytes) or isinstance(
-        passphrase, str
-    ), "Passphrase must be a bytes or string, not " + str(type(passphrase))
+    assert isinstance(passphrase, bytes) or isinstance(passphrase, str), (
+        "Passphrase must be a bytes or string, not " + str(type(passphrase))
+    )
     if isinstance(passphrase, str):
         passphrase = passphrase.encode("utf-8")
 
