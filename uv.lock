@@ -652,9 +652,9 @@ sdist = { url = "https://files.pythonhosted.org/packages/73/22/f95f4dd50f1e1352d
 
 [[package]]
 name = "ripgrepy"
-version = "2.0.1"
+version = "2.2.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/fd/14/239a960944cb0e104a66a784d4ce5d7d5bd418ebe0b267f8b9070ae54c38/ripgrepy-2.0.1.tar.gz", hash = "sha256:4baa62012f42d45f7145f424badd98e9366ab47fedb1e26086b3696b142e23b4", size = 31460, upload-time = "2024-12-19T03:34:50.051Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/80/8a/023e7c432634a6090a26ace319a37a2a73aac8fa6a7bf142fd7b3ec8fd3b/ripgrepy-2.2.0.tar.gz", hash = "sha256:4c43c61384f257660007acd271a5d8e4abe9be0b069c418d091f7299e080ca9d", size = 31740, upload-time = "2025-07-11T01:18:01.662Z" }
 
 [[package]]
 name = "ruff"
