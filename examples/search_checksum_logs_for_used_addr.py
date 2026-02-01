@@ -100,15 +100,18 @@ def check_log_for_used_addrs(
             "No password list provided. Skipping encrypted private keys."
         )
 
+    input_log_file = Path(input_log_file)
+    used_addr_file = Path(used_addr_file)
+
     df_log = read_checksum_log_into_df(input_log_file)
+    if 0:
+        df_log.write_parquet(input_log_file.with_suffix(".log.pq"))
+
     logger.info(f"Loaded {len(df_log):,} checksum passes from the log file.")
 
     log_checksum_summary(df_log)
     log_checksum_len20_facts(df_log)
     log_checksum_len44_facts(df_log)
-
-    if isinstance(used_addr_file, str):
-        used_addr_file = Path(used_addr_file)
 
     # Create the main store of addresses
     addr_store: dict[str, StatusForAddress] = {}
