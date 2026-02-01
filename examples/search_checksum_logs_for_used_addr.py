@@ -22,29 +22,29 @@ python examples/search_checksum_logs_for_used_addr.py tests/test_data/armory_wal
 """
 
 import argparse
-from pathlib import Path
-from dataclasses import dataclass
-import json
 import itertools
+import json
+from dataclasses import dataclass
+from pathlib import Path
 from typing import Any
 
-from loguru import logger
 import polars as pl
+from loguru import logger
 from tqdm import tqdm
 from used_addr_check import search_multiple_in_file
 
+from armory_lib.calcs import (
+    address_hash160_to_address,
+    decrypt_aes_cfb,
+    key_derivation_function_romix_PyBtcKdfParamsMinimal,
+    public_key_to_address,
+    unencrypted_priv_key_to_address,
+)
 from armory_lib.specific_parsing import (
-    read_checksum_log_into_df,
-    log_checksum_summary,
     log_checksum_len20_facts,
     log_checksum_len44_facts,
-)
-from armory_lib.calcs import (
-    unencrypted_priv_key_to_address,
-    address_hash160_to_address,
-    public_key_to_address,
-    key_derivation_function_romix_PyBtcKdfParamsMinimal,
-    decrypt_aes_cfb,
+    log_checksum_summary,
+    read_checksum_log_into_df,
 )
 from armory_lib.types.py_btc_kdf_params import PyBtcKdfParamsMinimal
 
@@ -86,7 +86,7 @@ def check_log_for_used_addrs(
     input_log_file: str | Path,
     used_addr_file: str | Path,
     password_list: list[str] | None = None,
-):
+) -> None:
     """Check a 'armory_wallet_checksum_searcher' log file for used addresses.
 
     The used_addr_file should be a file containing a list of used addresses,
@@ -285,7 +285,7 @@ def check_log_for_used_addrs(
         logger.info("No used addresses found.")
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(
         description="Check a 'armory_wallet_checksum_searcher' log file for used addresses."  # noqa
     )

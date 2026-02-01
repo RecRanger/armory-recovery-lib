@@ -16,8 +16,9 @@ from armory_lib.calcs import unencrypted_priv_key_to_address
 def check_json_priv_keys_for_used_addr(
     input_json_file: str | Path,
     used_addr_file: str | Path,
-):
+) -> None:
     """Check a JSON file of private keys for used addresses.
+
     The JSON file should be a list of hex-encoded private keys (unencrypted).
 
     The used_addr_file should be a file containing a list of used addresses,
@@ -61,7 +62,7 @@ def check_json_priv_keys_for_used_addr(
         logger.info("No used addresses found.")
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(
         description="Check a JSON file of private keys for used addresses."
     )

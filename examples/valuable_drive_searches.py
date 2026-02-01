@@ -6,16 +6,16 @@ a broken hard drive for, in search of a specific armory wallet.
 import argparse
 
 from armory_lib.calcs import (
-    bitcoin_addr_to_armory_wallet_id,
-    bitcoin_addr_to_armory_unique_id,
     address_to_address_hash160,
+    bitcoin_addr_to_armory_unique_id,
+    bitcoin_addr_to_armory_wallet_id,
     compute_checksum,
 )
 
 
 def generate_valuable_searches(
     wallet_addr: str = "1CDkMAThcNS4hMZexDiwZF6SJ9gzYmqVgm",
-):
+) -> None:
     wallet_id = bitcoin_addr_to_armory_wallet_id(wallet_addr)
     unique_id = bitcoin_addr_to_armory_unique_id(wallet_addr)
 
@@ -31,7 +31,7 @@ def generate_valuable_searches(
     )
 
 
-def main():
+def main() -> None:
     parser = argparse.ArgumentParser(
         description="Generate valuable search terms for a broken hard drive."
     )
