@@ -20,11 +20,11 @@ dependencies = [
     "bitcoinlib>=0.7.6",
     "cryptography",
     "loguru",
-    "polars>1",
+    "polars>=1.37.1",
     "base58",
     "ripemd-hash",
     "fire",
-    "used_addr_check>=0.1.9",
+    "used_addr_check>=0.2.0", # v0.1.9 had a bug where it missed many.
     "tqdm",
 ]
 

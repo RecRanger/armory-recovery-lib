@@ -32,10 +32,10 @@ requires-dist = [
     { name = "cryptography" },
     { name = "fire" },
     { name = "loguru" },
-    { name = "polars", specifier = ">1" },
+    { name = "polars", specifier = ">=1.37.1" },
     { name = "ripemd-hash" },
     { name = "tqdm" },
-    { name = "used-addr-check", specifier = ">=0.1.9" },
+    { name = "used-addr-check", specifier = ">=0.2.0" },
 ]
 
 [package.metadata.requires-dev]
@@ -774,7 +774,7 @@ wheels = [
 
 [[package]]
 name = "used-addr-check"
-version = "0.1.9"
+version = "0.2.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "backoff" },
@@ -785,9 +785,9 @@ dependencies = [
     { name = "ripgrepy" },
     { name = "tqdm" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/cf/e5/b73a145f25be09d189789b2745db36431f93223d2be711d26b52d8a1ff4e/used_addr_check-0.1.9.tar.gz", hash = "sha256:f812e54917bf8b7fad24083ce53cfc924d28f2f5e6b24b02b8bcae571d9f16ed", size = 44089, upload-time = "2026-01-17T03:48:09.665Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/19/29/64310ca941e90f46a771eb90bbbc31b9687d4d6632a161c43d9980c7af97/used_addr_check-0.2.0.tar.gz", hash = "sha256:377733eacbd26c363d9101d266bcfa06d3a3a3e4f610c7976aebb873912b1fdb", size = 42748, upload-time = "2026-02-01T04:32:38.528Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/12/66/010cb1cb3174dcce2d933fa696b71417307cacd13869ca0cf09134061e8a/used_addr_check-0.1.9-py3-none-any.whl", hash = "sha256:565943b31b024b064db3ad32234ec0bcab4c3da855ccaad49f7da2949ab8b3e3", size = 12353, upload-time = "2026-01-17T03:48:08.208Z" },
+    { url = "https://files.pythonhosted.org/packages/23/23/f5e64a12c868222d8468c04201f33f8446983164051a2e471e4f3cd132db/used_addr_check-0.2.0-py3-none-any.whl", hash = "sha256:0b84d74071da7d32b9506bface16c84f73b0e494454e498fbea82cb965a285a6", size = 10418, upload-time = "2026-02-01T04:32:37.222Z" },
 ]
 
 [[package]]
